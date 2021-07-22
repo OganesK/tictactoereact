@@ -1,10 +1,13 @@
 import React from "react";
+import Board from "./components/Board";
+import "./styles/root.scss"
 
 const App = () => {
   return (
-  <React.Fragment>
-    <h1>S</h1>
-  </React.Fragment>
+  <div>
+    <h1>TIC TAC TOE</h1>
+    <Board />
+  </div>
   );
 };
 

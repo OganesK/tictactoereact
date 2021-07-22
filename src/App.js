@@ -1,52 +1,66 @@
 import React, {useState} from "react";
-import Board from "./components/Board";
-import "./styles/root.scss";
-import "E:/Projects/tictactoereact/src/styles/app.scss";
-import "E:/Projects/tictactoereact/src/styles/square.scss";
+import Board from "./components/Board/Board";
+import History from "./components/History/History"
+import "./root.scss";
 import { calculateWinner } from "./helpers";
 
 const App = () => {
   
-  const [board, setBoard] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState([
+      {board:Array(9).fill(null), isXNext:true}
+    ]);
 
-  const [IsXNext, setIsXNext] = useState(false);
+    const [currentMove, setCurrentMove] = useState(0);
 
-  const winner = calculateWinner(board);
+    const current = history[currentMove];
 
-  const message = winner ? `Winner is ${winner}` :
-                  `Next player is ${IsXNext ? 'X':'O'}`;
+    console.log('History', history)
 
-  console.log(winner);
+    const [IsXNext, setIsXNext] = useState(false);
 
-  const handleSquareClick = (position) => {
+    const winner = calculateWinner(current.board);
 
-      if( board[position] || winner) {
+    const message = winner ? `Winner is ${winner}` :
+                    `Next player is ${current.isXNext ? 'X':'O'}`;
 
-          return;
 
-      }
-      
-      setBoard((prev) => {
+    const handleSquareClick = (position) => {
 
-          return prev.map((square, pos) => {
+        if( current.board[position] || winner) {
 
-              if(pos === position) {
-                  return IsXNext ? 'X' : 'O';
-              }
+            return;
 
-              return square;
-          })
+        }
+        
+        setHistory((prev) => {
 
-      })
+            const last = prev[prev.length - 1];
 
-      setIsXNext((prev) => !prev);
+            const newBoard =  last.board.map((square, pos) => {
+
+                if(pos === position) {
+                    return last.isXNext ? 'X' : 'O';
+                }
+
+                return square;
+            });
+            
+            return prev.concat({board: newBoard, isXNext: !last.isXNext});
+
+        });
+        setCurrentMove(prev => prev + 1);
   };
+
+  const moveTo = (move) => {
+    setCurrentMove(move);
+  }
 
   return (
   <div className='app'>
     <h1>TIC TAC TOE</h1>
     <h2>{message}</h2>
-    <Board board={board} handleSquareClick={handleSquareClick}/>
+    <Board board={current.board} handleSquareClick={handleSquareClick}/>
+    <History history={history} moveTo={moveTo} currentMove={currentMove}/>
   </div>
   );
 };

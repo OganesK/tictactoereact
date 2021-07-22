@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
-import Square from "./Square";
-import "E:/Projects/tictactoereact/src/styles/board.scss"
+import Square from "../Square/Square";
+import "./board.scss"
  
 
 const Board = ({board, handleSquareClick}) => {

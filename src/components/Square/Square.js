@@ -1,6 +1,6 @@
 import React from "react";
-import "E:/Projects/tictactoereact/src/styles/square.scss"
-import "E:/Projects/tictactoereact/src/styles/button.scss"
+import "./square.scss"
+import "./button.scss"
 
 const Square = ({value, onClick}) => {
     return (

@@ -4,12 +4,15 @@ import Square from "../Square/Square";
 import "./board.scss"
  
 
-const Board = ({board, handleSquareClick}) => {
-
+const Board = ({board, handleSquareClick, winningSquares}) => {
 
     const renderSquare = (position) => {
 
-        return <Square value={board[position]} onClick={() => handleSquareClick(position)} />
+        const isWinningSquare = winningSquares.includes(position);
+
+        return <Square value={board[position]} 
+        onClick={() => handleSquareClick(position)}
+        isWinningSquare={isWinningSquare}/>
 
     };
 

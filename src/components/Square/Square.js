@@ -1,10 +1,10 @@
 import React from "react";
 import "./square.scss"
-import "./button.scss"
 
-const Square = ({value, onClick}) => {
+const Square = ({value, onClick, isWinningSquare}) => {
     return (
-    <button type="button" className='square' onClick={onClick}>
+    <button type="button" className='square' onClick={onClick} 
+    style={{fontWeight: isWinningSquare ? 'bold' : 'normal'}}>
         {value}
     </button>
     );
